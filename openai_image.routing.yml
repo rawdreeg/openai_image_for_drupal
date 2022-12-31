@@ -1,0 +1,16 @@
+openai_image.settings_form:
+  path: '/admin/config/system/openai-image'
+  defaults:
+    _title: 'OpenAI Image settings'
+    _form: 'Drupal\openai_image\Form\SettingsForm'
+  requirements:
+    _permission: 'administer openai_image configuration'
+
+
+openai_image.create_image:
+  path: '/openai-image/api/image/create'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\openai_image\Controller\OpenaiImageController::createImage'
+  requirements:
+    _permission: 'access content'

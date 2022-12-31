@@ -1,0 +1,5 @@
+name: OpenAI Image
+type: module
+description: Generate image from node title.
+package: Custom
+core_version_requirement: ^9 || ^10

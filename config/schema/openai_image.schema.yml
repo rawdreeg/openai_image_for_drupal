@@ -1,0 +1,16 @@
+# Schema for the configuration files of the OpenAI Image module.
+openai_image.settings:
+  type: config_object
+  label: 'OpenAI Image settings'
+  mapping:
+    example:
+      type: string
+      label: 'Example'
+
+field.widget.settings.openai_image_openai_image_generator:
+  type: mapping
+  label: OpenAI Image Generator widget settings
+  mapping:
+    foo:
+      type: string
+      label: Foo

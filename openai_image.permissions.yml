@@ -1,0 +1,4 @@
+administer openai_image configuration:
+  title: 'Administer openai_image configuration'
+  description: 'Optional description.'
+  restrict access: true

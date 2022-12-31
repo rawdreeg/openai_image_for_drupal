@@ -1,0 +1,10 @@
+# Custom module library for general purposes.
+openai_image:
+  js:
+    js/openai-image.js: {}
+  css:
+    component:
+      css/openai-image.css: {}
+  dependencies:
+    - core/drupalSettings
+    - core/jquery

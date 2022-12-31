@@ -1,0 +1,4 @@
+services:
+  openai_image.image_generator:
+    class: Drupal\openai_image\ImageGenerator
+    arguments: ['@config.factory', '@entity_type.manager']
