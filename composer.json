@@ -1,6 +1,6 @@
 {
     "name": "rawdreeg/openai_image",
-    "description": "Open ai image generator field widget for Drupal.",
+    "description": "Drupal Field widget for the Open AI image generator",
     "type": "drupal-module",
     "minimum-stability": "stable",
     "license": "GPL-2.0-or-later",
