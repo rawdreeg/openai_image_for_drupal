@@ -71,8 +71,21 @@ class OpenaiImageGeneratorWidget extends ImageWidget {
 
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
+    // Create fieldset wrepper.
+    $element['openai_image'] = [
+      '#type' => 'fieldset',
+      '#attributes' => [
+        'class' => ['openai-image-fieldset'],
+      ],
+      '#title' => $this->t('OpenAI Image Generator'),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+    ];
+
+
+
     // Prompt field
-    $element['prompt'] = [
+    $element['openai_image']['prompt'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Prompt text'),
       '#attributes' => [
@@ -84,8 +97,7 @@ class OpenaiImageGeneratorWidget extends ImageWidget {
       '#weight' => -10,
     ];
 
-
-    $element['generate_images'] = [
+    $element['openai_image']['generate_images'] = [
       '#type' => 'inline_template',
       '#template' => '<div> <button id="openai-image-generate-images" data-n="{{number_of_images}}" data-size="{{image_size}}">Generate Images</button></div>',
       '#context' => [
@@ -95,7 +107,7 @@ class OpenaiImageGeneratorWidget extends ImageWidget {
     ];
 
     // Markup to display images.
-    $element['images_block'] = [
+    $element['openai_image']['images_block'] = [
       '#type' => 'markup',
       '#markup' => '<div id="openai-image-images"></div>',
     ];

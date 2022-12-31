@@ -8,3 +8,12 @@ openai_image:
   dependencies:
     - core/drupalSettings
     - core/jquery
+openai_image_filefield:
+  version: VERSION
+  js:
+    js/openai_image_interface.js: { }
+    js/openai_image.filefield.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
