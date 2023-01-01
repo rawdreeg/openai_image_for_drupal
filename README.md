@@ -52,4 +52,4 @@ CONFIGURATION
 TO-DO
 ------------
 
-- [] Provide ckeditor plugin along with the field widget
+- [ ] Provide ckeditor plugin along with the field widget
