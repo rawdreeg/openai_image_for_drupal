@@ -24,18 +24,31 @@
         }
 
         // check if prompt is empty
-        if (attributes.prompt == "") {
+        if (attributes.prompt === "") {
           alert("Please enter a prompt");
           return;
         }
 
         this.style.color = "green";
+
+        this.innerHTML = "Generating images...";
+
         fetch('/openai-image/api/image/create' + `?prompt=${attributes.prompt}&n=${attributes.n}&size=${attributes.size}`, {//options => (optional)
           method: 'get' //Get / POST / ...
         }).then(function(response) {
+          btn.innerHTML = "Generate images";
           return response.json();
         })
           .then(function(data) {
+
+            // check error
+            if (data.error) {
+              imagesWrapper.innerHTML = "Image generation failed. Please try again." + "<br><br> <p style='color: red'>" + data.error + "</p>";
+              btn.style.color = "";
+              btn.innerHTML = "Generate images";
+              return;
+            }
+
             data.forEach(function(item) {
               let imgWrapper = document.createElement("div");
               imgWrapper.classList.add("openai-image-image-wrapper");
@@ -64,7 +77,9 @@
             document.querySelector('input.openai-image-prompt').value = "";
           })
           .catch(function(err) {
-            console.log("Error:"+err);
+            // log error
+            console.log(err);
+
           });
       });
 
