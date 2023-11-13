@@ -2,19 +2,23 @@
 
 namespace Drupal\openai_image;
 
+use Drupal\Core\Field\WidgetInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Field\WidgetInterface;
 use Drupal\Core\Security\TrustedCallbackInterface;
-use Drupal\Core\Url;
 
+/**
+ * Defines a class for OpenAI Image field.
+ */
 class OpenAIFileField implements TrustedCallbackInterface {
+
   /**
    * {@inheritdoc}
    */
   public static function trustedCallbacks() {
     return ['preRenderWidget'];
   }
+
   /**
    * Returns a list of supported widgets.
    */
@@ -26,6 +30,10 @@ class OpenAIFileField implements TrustedCallbackInterface {
     }
     return $widgets;
   }
+
+  /**
+   * Checks if a widget is supported.
+   */
   public static function isWidgetSupported(WidgetInterface $widget) {
     return in_array($widget->getPluginId(), static::supportedWidgets());
   }
@@ -57,9 +65,9 @@ class OpenAIFileField implements TrustedCallbackInterface {
     }
     return $element;
   }
+
   /**
    * Sets widget file id values by validating and processing the submitted data.
-   *
    */
   public static function setWidgetValue($element, &$input, FormStateInterface $form_state) {
     if (empty($input['openai_image_paths'])) {
@@ -102,7 +110,6 @@ class OpenAIFileField implements TrustedCallbackInterface {
 
   /**
    * Returns a managed file entity by uri.
-   *
    */
   public static function getFileEntity($uri, $create = FALSE, $save = FALSE) {
     $file = FALSE;
@@ -119,25 +126,25 @@ class OpenAIFileField implements TrustedCallbackInterface {
    * Creates a file entity with an uri.
    */
   public static function createFileEntity($uri, $save = TRUE) {
-    // get real file uri
+    // Get real file uri.
     $real_uri = strtok($uri, '?');
 
-    // Save image from external url to local file system
+    // Save image from external url to local file system.
     $file_content = file_get_contents($uri);
     /** @var \Drupal\file\Entity\File $file */
-    $file = \Drupal::service('file.repository')->writeData($file_content, 'public://'.basename($real_uri), FileSystemInterface::EXISTS_REPLACE);
+    $file = \Drupal::service('file.repository')->writeData($file_content, 'public://' . basename($real_uri), FileSystemInterface::EXISTS_REPLACE);
 
-    // set mimetype
+    // Set mimetype.
     $path = \Drupal::service('file_system')->realpath($file->getFileUri());
     $file->setMimeType(mime_content_type($path));
 
-    // status
+    // Status.
     $file->setPermanent();
 
-    // uid
+    // Uid.
     $file->setOwnerId(\Drupal::currentUser()->id());
 
-    // filesize
+    // Filesize.
     $file->setSize(filesize($path));
 
     $file->save();
@@ -145,4 +152,5 @@ class OpenAIFileField implements TrustedCallbackInterface {
     return $file;
 
   }
+
 }

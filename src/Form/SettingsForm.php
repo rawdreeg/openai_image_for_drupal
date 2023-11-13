@@ -38,7 +38,6 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $this->config('openai_image.settings')->get('models'),
     ];
 
-
     $form['api_key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('API Key'),

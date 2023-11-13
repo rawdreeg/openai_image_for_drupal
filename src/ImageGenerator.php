@@ -24,8 +24,11 @@ class ImageGenerator {
    */
   protected $entityTypeManager;
 
-  /** @var $openai \OpenAI */
-  protected $openai_client;
+  /**
+   * Openai client.
+   *
+   * @var \OpenAI */
+  protected $openaiClient;
 
   /**
    * Constructs an ImageGenerator object.
@@ -39,19 +42,27 @@ class ImageGenerator {
     $this->configFactory = $config_factory;
     $this->entityTypeManager = $entity_type_manager;
 
-    // init openai_client
-    $this->openai_client = \OpenAI::client($this->configFactory->get('openai_image.settings')->get('api_key'));
+    // Init openai_client.
+    $this->openaiClient = \OpenAI::client($this->configFactory->get('openai_image.settings')->get('api_key'));
   }
 
   /**
-   * @param $prompt
+   * Generate an image.
+   *
+   * @param string $prompt
+   *   The prompt to generate an image from.
+   * @param int $n
+   *   The number of images to generate.
+   * @param string $size
+   *   The size of the image to generate.
    *
    * @return \OpenAI\Responses\Images\CreateResponse
+   *   The response from the API.
    */
   public function generateImage($prompt, $n = 1, $size = '512x512') {
 
     $model = $this->configFactory->get('openai_image.settings')->get('models') ?? 'dall-e-2';
-    return $this->openai_client->images()->create([
+    return $this->openaiClient->images()->create([
       'prompt' => $prompt,
       'n' => $n,
       'size' => $size,

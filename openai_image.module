@@ -10,7 +10,6 @@ use Drupal\openai_image\OpenAIFileField;
 
 /**
  * Implements hook_field_widget_single_element_form_alter().
- *
  */
 function openai_image_field_widget_single_element_form_alter(&$element, FormStateInterface $form_state, $context) {
   if ($context['widget']->getPluginId() === 'openai_image_openai_image_generator') {
@@ -28,7 +27,6 @@ function openai_image_field_widget_single_element_form_alter(&$element, FormStat
 
 /**
  * Implements hook_filefield_preprocess().
- *
  */
 function openai_image_preprocess(&$variables, $hook) {
   $variables['#attached']['library'][] = 'openai_image/openai_image_filefield';

@@ -2,9 +2,7 @@
 
 namespace Drupal\openai_image\Plugin\Field\FieldWidget;
 
-use Drupal\Component\Utility\Xss;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\image\Plugin\Field\FieldWidget\ImageWidget;
 
@@ -54,11 +52,12 @@ class OpenaiImageGeneratorWidget extends ImageWidget {
    */
   public function settingsSummary() {
 
-    $summary[] = $this->t('Number of Images: @n ', [
-      '@n' => $this->getSetting('number_of_images')]);
+    $summary[] = $this->t('Number of Images: @n', [
+      '@n' => $this->getSetting('number_of_images'),
+    ]);
 
-    $summary[] = $this->t('Image Size: @size ', [
-      '@size' => $this->getSetting('image_size')
+    $summary[] = $this->t('Image Size: @size', [
+      '@size' => $this->getSetting('image_size'),
     ]);
 
     return $summary;
@@ -82,9 +81,7 @@ class OpenaiImageGeneratorWidget extends ImageWidget {
       '#collapsed' => TRUE,
     ];
 
-
-
-    // Prompt field
+    // Prompt field.
     $element['openai_image']['prompt'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Prompt text'),
@@ -92,7 +89,7 @@ class OpenaiImageGeneratorWidget extends ImageWidget {
         'placeholder' => $this->t('Enter prompt text'),
         "class" => ["openai-image-prompt"],
       ],
-      '#default_value' => isset($items[$delta]->prompt) ? $items[$delta]->prompt : NULL,
+      '#default_value' => $items[$delta]->prompt ?? NULL,
       '#description' => $this->t('The prompt for the image generator.'),
       '#weight' => -10,
     ];
@@ -112,7 +109,7 @@ class OpenaiImageGeneratorWidget extends ImageWidget {
       '#markup' => '<div id="openai-image-images"></div>',
     ];
 
-    //attach library
+    // Attach library.
     $element['#attached']['library'][] = 'openai_image/openai_image';
 
     return $element;
