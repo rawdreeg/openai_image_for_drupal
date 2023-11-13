@@ -35,7 +35,7 @@ class SettingsForm extends ConfigFormBase {
         'dall-e-2' => $this->t('Dall-e 2'),
         'dall-e-3' => $this->t('Dall-e 3'),
       ],
-      '#default_value' => $this->config('openai_image.settings')->get('models'),
+      '#default_value' => $this->config('openai_image.settings')->get('model'),
     ];
 
     $form['api_key'] = [
