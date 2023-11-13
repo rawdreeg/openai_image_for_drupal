@@ -1,0 +1,25 @@
+openai_image_generator:
+  # Configuration that will be sent to CKEditor 5 JavaScript plugins.
+  ckeditor5:
+    plugins:
+      - openai_image.OpenAIImageGenerator
+    # *Additional configuration properties*
+    # config: data sent to the constructor of any CKEditor 5 plugin
+    #   editorPluginName:
+    #     editorPluginProperty: editorPluginValue
+
+  # Configuration that will be used directly by Drupal.
+  drupal:
+    label: OpenAI Image Generator
+    # The library loaded while using the editor.
+    library: openai_image/ckeditor
+    # The library loaded when configuring the text format using this plugin.
+    admin_library: openai_image/ckeditor.admin
+    toolbar_items:
+      # This should match the name of the corresponding plugin exported in the
+      # plugin's index.js.
+      openai_image:
+        label: OpenAI Image Generator
+    # If the plugin does not provide elements, set this as
+    # `elements: false`
+    elements: false

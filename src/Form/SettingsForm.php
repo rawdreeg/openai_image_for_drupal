@@ -28,6 +28,17 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form['models'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Models'),
+      '#options' => [
+        'dall-e-2' => $this->t('Dall-e 2'),
+        'dall-e-3' => $this->t('Dall-e 3'),
+      ],
+      '#default_value' => $this->config('openai_image.settings')->get('models'),
+    ];
+
+
     $form['api_key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('API Key'),
@@ -42,6 +53,7 @@ class SettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('openai_image.settings')
       ->set('api_key', $form_state->getValue('api_key'))
+      ->set('models', $form_state->getValue('models'))
       ->save();
     parent::submitForm($form, $form_state);
   }

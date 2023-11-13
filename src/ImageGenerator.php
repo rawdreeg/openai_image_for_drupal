@@ -50,11 +50,13 @@ class ImageGenerator {
    */
   public function generateImage($prompt, $n = 1, $size = '512x512') {
 
+    $model = $this->configFactory->get('openai_image.settings')->get('models') ?? 'dall-e-2';
     return $this->openai_client->images()->create([
       'prompt' => $prompt,
       'n' => $n,
       'size' => $size,
       'response_format' => 'url',
+      'model' => $model,
     ]);
 
   }

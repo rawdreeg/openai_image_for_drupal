@@ -6,14 +6,21 @@ openai_image:
     component:
       css/openai-image.css: {}
   dependencies:
-    - core/drupalSettings
-    - core/jquery
+    - core/once
+    - core/drupal
 openai_image_filefield:
-  version: VERSION
   js:
     js/openai_image_interface.js: { }
     js/openai_image.filefield.js: {}
   dependencies:
-    - core/jquery
     - core/drupal
-    - core/drupalSettings
+
+ckeditor:
+  js:
+    js/build/openai_image.js: { preprocess: false, minified: true }
+  dependencies:
+    - core/ckeditor5
+ckeditor.admin:
+  css:
+    theme:
+      css/admin-openai-image.css: { }
