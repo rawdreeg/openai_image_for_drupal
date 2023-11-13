@@ -52,7 +52,7 @@ CONFIGURATION
 TO-DO
 ------------
 
-- [ ] Provide ckeditor plugin along with the field widget
+- [x] Provide ckeditor plugin along with the field widget
 - [ ] Clean up up code to pass phpcs
 - [ ] Publish on Drupal.org
 
