@@ -54,5 +54,5 @@ TO-DO
 
 - [x] Provide ckeditor plugin along with the field widget
 - [x] Clean up up code to pass phpcs
-- [ ] Publish on Drupal.org
+- [x] Publish on Drupal.org
 
