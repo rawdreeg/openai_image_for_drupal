@@ -44,7 +44,7 @@ export default class OpenAIImageGeneratorCommand extends Command {
     // This could be a simple list of images, or a more complex UI with previews.
 
     // For demonstration purposes, we'll just take the first image's URL.
-    const imageUrl = 'data:image/png;base64,'. images[0].b64_json;
+    const imageUrl = 'data:image/png;base64,' + images[0].b64_json;
 
     editor.model.change(writer => {
       const imageElement = writer.createElement('imageBlock', {
