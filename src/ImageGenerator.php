@@ -55,18 +55,24 @@ class ImageGenerator {
    *   The number of images to generate.
    * @param string $size
    *   The size of the image to generate.
+   * @param string $response_format
+   *   The response format.
    *
    * @return \OpenAI\Responses\Images\CreateResponse
    *   The response from the API.
    */
-  public function generateImage($prompt, $n = 1, $size = '512x512') {
+  public function generateImage($prompt, $n = 1, $size = '512x512', $response_format = 'url') {
 
     $model = $this->configFactory->get('openai_image.settings')->get('model') ?? 'dall-e-2';
+
+    if ($n === 0) {
+      $n = $this->configFactory->get('openai_image.settings')->get('n') ?? 1;
+    }
     return $this->openaiClient->images()->create([
       'prompt' => $prompt,
-      'n' => $n,
+      'n' => (int) $n,
       'size' => $size,
-      'response_format' => 'url',
+      'response_format' => $response_format,
       'model' => $model,
     ]);
 

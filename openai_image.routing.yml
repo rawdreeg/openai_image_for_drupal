@@ -10,7 +10,15 @@ openai_image.settings_form:
 openai_image.create_image:
   path: '/openai-image/api/image/create'
   defaults:
-    _title: 'Example'
+    _title: 'Create Image'
     _controller: '\Drupal\openai_image\Controller\OpenaiImageController::createImage'
+  requirements:
+    _permission: 'access content'
+
+openai_image.save_image:
+  path: '/openai-image/api/image/save'
+  defaults:
+    _title: 'Save Image'
+    _controller: '\Drupal\openai_image\Controller\OpenaiImageController::saveImage'
   requirements:
     _permission: 'access content'
