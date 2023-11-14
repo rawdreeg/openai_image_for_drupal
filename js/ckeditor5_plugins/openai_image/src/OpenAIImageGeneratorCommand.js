@@ -24,7 +24,10 @@ export default class OpenAIImageGeneratorCommand extends Command {
 
         // check error
         if (data.error) {
-          console.error('No images returned from the API');
+          console.error(data.error);
+          // show error message
+          alert("Image generation failed with the following error: \n\n" + data.error);
+
           return;
         }
         if (data && data.length) {

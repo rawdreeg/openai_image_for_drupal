@@ -41,8 +41,9 @@ class SettingsForm extends ConfigFormBase {
     // Default number of images to generate.
     $form['n'] = [
       '#type' => 'number',
-      '#title' => $this->t('Number of images to generate'),
+      '#title' => $this->t('Number of images to generate (CKEditor plugin only)'),
       '#default_value' => $this->config('openai_image.settings')->get('n') ?? 1,
+      '#description' => $this->t('The number of images to generate. <br>Dall-e 3 only supports 1 image at a time. <br> Form Widget configuration overrides this setting for image fields.'),
     ];
 
     $form['api_key'] = [
