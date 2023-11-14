@@ -31,11 +31,15 @@ class OpenaiImageController extends ControllerBase {
   protected $requestStack;
 
   /**
+   * The file repository.
+   *
    * @var \Drupal\file\FileRepositoryInterface
    */
   protected $fileRepository;
 
   /**
+   * The file system.
+   *
    * @var \Drupal\Core\File\FileSystemInterface
    */
   protected $fileSystem;
@@ -48,9 +52,9 @@ class OpenaiImageController extends ControllerBase {
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request stack.
    * @param \Drupal\file\FileRepositoryInterface $file_repository
-   *  The file repository.
+   *   The file repository.
    * @param \Drupal\Core\File\FileSystemInterface $file_system
-   * The file system.
+   *   The file system.
    */
   public function __construct(ImageGenerator $image_generator, RequestStack $request_stack, FileRepositoryInterface $file_repository, FileSystemInterface $file_system) {
     $this->imageGenerator = $image_generator;
@@ -99,13 +103,14 @@ class OpenaiImageController extends ControllerBase {
    * SaveImage.
    *
    * @param \Symfony\Component\HttpFoundation\Request $request
-   * The request.
+   *   The request.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
-   * The response.
+   *   The response.
+   *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function saveImage( Request $request ) {
+  public function saveImage(Request $request) {
     $content = json_decode($request->getContent(), TRUE);
     $base64_image = $content['image'];
 
@@ -141,7 +146,8 @@ class OpenaiImageController extends ControllerBase {
       // Set the file status to permanent.
       $file->setPermanent();
       $file->save();
-    }catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       return new JsonResponse([
         'error' => $e->getMessage(),
       ]);
@@ -154,5 +160,4 @@ class OpenaiImageController extends ControllerBase {
 
   }
 
-
-  }
+}

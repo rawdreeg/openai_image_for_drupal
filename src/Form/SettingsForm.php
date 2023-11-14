@@ -57,12 +57,10 @@ class SettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
 
-    // if model is Dall-e 3, n must be 1.
-
+    // If model is Dall-e 3, n must be 1.
     if ($form_state->getValue('model') == 'dall-e-3' && $form_state->getValue('n') != 1) {
       $form_state->setErrorByName('n', $this->t('Dall-e 3 only supports 1 image at a time.'));
     }
