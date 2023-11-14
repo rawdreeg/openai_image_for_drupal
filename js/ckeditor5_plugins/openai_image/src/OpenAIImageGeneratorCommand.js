@@ -16,7 +16,7 @@ export default class OpenAIImageGeneratorCommand extends Command {
     }
 
     // Call the endpoint with the prompt.
-    fetch('/openai-image/api/image/create' + `?prompt=${promptText}&n=1&size=1024x1024&response_format=b64_json`, {//options => (optional)
+    fetch('/openai-image/api/image/create' + `?prompt=${promptText}&size=1024x1024&response_format=b64_json`, {//options => (optional)
       method: 'GET',
     })
       .then(response => response.json())
@@ -40,20 +40,55 @@ export default class OpenAIImageGeneratorCommand extends Command {
   }
 
   _showImageSelectionUI(editor, images, promptText) {
-    // Implement your UI logic here.
-    // This could be a simple list of images, or a more complex UI with previews.
+    // Create a container for the image selection UI
+    const selectionContainer = document.createElement('div');
+    selectionContainer.style.position = 'absolute';
+    selectionContainer.style.top = '50%';
+    selectionContainer.style.left = '50%';
+    selectionContainer.style.transform = 'translate(-50%, -50%)';
+    selectionContainer.style.backgroundColor = '#fff';
+    selectionContainer.style.padding = '20px';
+    selectionContainer.style.border = '1px solid #ccc';
+    selectionContainer.style.zIndex = '1000';
+    selectionContainer.style.maxHeight = '400px';
+    selectionContainer.style.overflowY = 'auto';
 
-    // For demonstration purposes, we'll just take the first image's URL.
-    const imageUrl = 'data:image/png;base64,' + images[0].b64_json;
+    // Add a title
+    const title = document.createElement('h3');
+    title.innerText = 'Select an Image';
+    selectionContainer.appendChild(title);
 
-    editor.model.change(writer => {
-      const imageElement = writer.createElement('imageBlock', {
-        src: imageUrl,
-        alt: promptText,
+    // Function to handle image selection
+    const selectImage = (base64Image) => {
+      const imageUrl = 'data:image/png;base64,' + base64Image;
+      editor.model.change(writer => {
+        const imageElement = writer.createElement('imageBlock', {
+          src: imageUrl,
+          alt: promptText,
+        });
+
+        editor.model.insertContent(imageElement, editor.model.document.selection);
       });
 
-      // Insert the image in the current selection location.
-      editor.model.insertContent(imageElement, editor.model.document.selection);
+      // Close the selection UI
+      document.body.removeChild(selectionContainer);
+    };
+
+    // Create and append image elements to the selection container
+    images.forEach(image => {
+      const img = document.createElement('img');
+      img.src = 'data:image/png;base64,' + image.b64_json;
+      img.style.width = '100px';
+      img.style.height = '100px';
+      img.style.margin = '10px';
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', () => selectImage(image.b64_json));
+
+      selectionContainer.appendChild(img);
     });
+
+    // Append the selection container to the body
+    document.body.appendChild(selectionContainer);
   }
+
 }
