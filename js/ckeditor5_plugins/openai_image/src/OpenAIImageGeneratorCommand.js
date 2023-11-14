@@ -16,7 +16,7 @@ export default class OpenAIImageGeneratorCommand extends Command {
     }
 
     // Call the endpoint with the prompt.
-    fetch('/openai-image/api/image/create' + `?prompt=${promptText}&n=1&size=1024x1024`, {//options => (optional)
+    fetch('/openai-image/api/image/create' + `?prompt=${promptText}&n=1&size=1024x1024&response_format=b64_json`, {//options => (optional)
       method: 'GET',
     })
       .then(response => response.json())
@@ -44,7 +44,7 @@ export default class OpenAIImageGeneratorCommand extends Command {
     // This could be a simple list of images, or a more complex UI with previews.
 
     // For demonstration purposes, we'll just take the first image's URL.
-    const imageUrl = images[0].url; // Replace with UI logic to select an image
+    const imageUrl = 'data:image/png;base64,'. images[0].b64_json;
 
     editor.model.change(writer => {
       const imageElement = writer.createElement('imageBlock', {

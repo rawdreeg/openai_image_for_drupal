@@ -59,9 +59,10 @@ class OpenaiImageController extends ControllerBase {
     $prompt = $this->requestStack->getCurrentRequest()->query->get('prompt');
     $n = $this->requestStack->getCurrentRequest()->query->get('n');
     $size = $this->requestStack->getCurrentRequest()->query->get('size');
+    $response_format = $this->requestStack->getCurrentRequest()->query->get('response_format') ?? 'url';
 
     try {
-      $image = $this->imageGenerator->generateImage($prompt, (int) $n, $size);
+      $image = $this->imageGenerator->generateImage($prompt, (int) $n, $size, $response_format);
     }
     catch (\Exception $e) {
       return new JsonResponse([
