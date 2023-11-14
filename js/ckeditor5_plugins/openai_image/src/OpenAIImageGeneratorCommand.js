@@ -58,6 +58,15 @@ export default class OpenAIImageGeneratorCommand extends Command {
     title.innerText = 'Select an Image';
     selectionContainer.appendChild(title);
 
+    // Create a loading indicator
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.innerText = 'Loading images...';
+    loadingIndicator.style.textAlign = 'center';
+    loadingIndicator.style.padding = '20px';
+
+    // Initially, show the loading indicator
+    selectionContainer.appendChild(loadingIndicator);
+
     // Function to handle image selection
     const selectImage = (base64Image) => {
       const imageUrl = 'data:image/png;base64,' + base64Image;
@@ -74,21 +83,33 @@ export default class OpenAIImageGeneratorCommand extends Command {
       document.body.removeChild(selectionContainer);
     };
 
-    // Create and append image elements to the selection container
-    images.forEach(image => {
-      const img = document.createElement('img');
-      img.src = 'data:image/png;base64,' + image.b64_json;
-      img.style.width = '100px';
-      img.style.height = '100px';
-      img.style.margin = '10px';
-      img.style.cursor = 'pointer';
-      img.addEventListener('click', () => selectImage(image.b64_json));
+    // Replace the loading indicator with the actual images once they are ready
+    const displayImages = () => {
+      // Remove loading indicator
+      selectionContainer.removeChild(loadingIndicator);
 
-      selectionContainer.appendChild(img);
-    });
+      // Create and append image elements to the selection container
+      images.forEach(image => {
+        const img = document.createElement('img');
+        img.src = 'data:image/png;base64,' + image.b64_json;
+        img.style.width = '100px';
+        img.style.height = '100px';
+        img.style.margin = '10px';
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', () => selectImage(image.b64_json));
+
+        selectionContainer.appendChild(img);
+      });
+    };
+
+    // Simulate a delay to fetch images (replace this with your actual image fetching logic)
+    setTimeout(() => {
+      displayImages();  // Call this function once images are fetched
+    }, 2000);  // Example delay of 2000ms (2 seconds)
 
     // Append the selection container to the body
     document.body.appendChild(selectionContainer);
+
   }
 
 }
