@@ -73,18 +73,46 @@ export default class OpenAIImageGeneratorCommand extends Command {
 
     // Function to handle image selection
     const selectImage = (base64Image) => {
-      const imageUrl = 'data:image/png;base64,' + base64Image;
-      editor.model.change(writer => {
-        const imageElement = writer.createElement('imageBlock', {
-          src: imageUrl,
-          alt: promptText,
-        });
 
-        editor.model.insertContent(imageElement, editor.model.document.selection);
+      // sav image in Drupal
+      fetch('/openai-image/api/image/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          image: base64Image,
+          filename: promptText,
+        }),
+      }).then(response => response.json())
+        .then(data => {
+
+          // Handle error
+          if (data.error) {
+            console.error(data.error);
+            // show error message
+            alert("Image saving failed with the following error: \n\n" + data.error);
+
+            return;
+          }
+
+          const imageUrl = data.url;
+          editor.model.change(writer => {
+            const imageElement = writer.createElement('imageBlock', {
+              src: imageUrl,
+              alt: promptText,
+            });
+
+            editor.model.insertContent(imageElement, editor.model.document.selection);
+          });
+
+          // Close the selection UI
+          document.body.removeChild(selectionContainer);
+
+        }).catch(error => {
+          console.error('Error:', error);
+          alert("There was an error saving your image.");
       });
-
-      // Close the selection UI
-      document.body.removeChild(selectionContainer);
     };
 
     images.forEach(image => {
