@@ -29,7 +29,7 @@ export default class OpenAIImageGeneratorCommand extends Command {
         }
         if (data && data.length) {
           // Provide UI for user to select an image.
-          this._showImageSelectionUI(editor, data);
+          this._showImageSelectionUI(editor, data, promptText);
         } else {
           console.error('No images returned from the API');
         }
@@ -39,7 +39,7 @@ export default class OpenAIImageGeneratorCommand extends Command {
       });
   }
 
-  _showImageSelectionUI(editor, images) {
+  _showImageSelectionUI(editor, images, promptText) {
     // Implement your UI logic here.
     // This could be a simple list of images, or a more complex UI with previews.
 
@@ -48,7 +48,8 @@ export default class OpenAIImageGeneratorCommand extends Command {
 
     editor.model.change(writer => {
       const imageElement = writer.createElement('imageBlock', {
-        src: imageUrl
+        src: imageUrl,
+        alt: promptText,
       });
 
       // Insert the image in the current selection location.
